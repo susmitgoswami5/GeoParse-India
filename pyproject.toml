@@ -5,13 +5,23 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "geoparse-india"
 version = "1.0.0"
-description = "Hierarchical Address Disambiguation & Geocoding Engine for Indian Addresses"
+description = "Hierarchical Address Disambiguation & Geocoding Engine for Indian Logistics"
 readme = "README.md"
-license = {text = "MIT"}
 requires-python = ">=3.9"
-authors = [
-    {name = "GeoParse Team"}
+license = {text = "MIT"}
+authors = [{name = "Susmit Goswami"}]
+keywords = ["nlp", "geocoding", "india", "ner", "logistics", "address-disambiguation", "h3", "fastapi"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
+
+[project.urls]
+Homepage = "https://github.com/susmitgoswami5/GeoParse-India"
+"Bug Tracker" = "https://github.com/susmitgoswami5/GeoParse-India/issues"
 
 dependencies = [
     "transformers>=4.30.0",
