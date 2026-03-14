@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geoparse-india"
+version = "1.0.0"
+description = "Hierarchical Address Disambiguation & Geocoding Engine for Indian Addresses"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "GeoParse Team"}
+]
+
+dependencies = [
+    "transformers>=4.30.0",
+    "torch>=2.0.0",
+    "datasets>=2.14.0",
+    "h3>=3.7.0",
+    "fastapi>=0.100.0",
+    "uvicorn[standard]>=0.23.0",
+    "jellyfish>=1.0.0",
+    "pydantic>=2.0.0",
+    "numpy>=1.24.0",
+    "seqeval>=1.2.2",
+    "metaphone>=0.6",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "httpx>=0.24.0",
+    "pytest-asyncio>=0.21.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["geoparse*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

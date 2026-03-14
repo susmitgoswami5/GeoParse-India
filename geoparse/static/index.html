@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GeoParse-India — Hierarchical Address Disambiguation & Geocoding Engine for Indian Addresses. Parse, correct, and geocode unstructured Indian address text.">
+    <title>GeoParse-India | Address Disambiguation Engine</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/static/style.css">
+
+    <!-- Leaflet for maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header__logo">
+                <div class="header__icon">📍</div>
+                <h1 class="header__title">GeoParse-India</h1>
+            </div>
+            <p class="header__subtitle">
+                Hierarchical Address Disambiguation & Geocoding for Indian E-Commerce Logistics
+            </p>
+            <div class="header__badge">
+                <span class="dot"></span>
+                <span id="system-status">System Ready</span>
+            </div>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-section glass-card animate-in" id="input-section">
+            <div class="glass-card__header">
+                <span class="glass-card__icon">✏️</span>
+                <span class="glass-card__title">Address Input</span>
+            </div>
+
+            <div class="address-input-wrapper">
+                <textarea
+                    id="address-input"
+                    class="address-input"
+                    placeholder="Paste any Indian address here...&#10;E.g.: Behind the big banyan tree, near Sharma Medicals, 2nd cross, Whitefield, Bangalore 560066"
+                    rows="3"
+                ></textarea>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-primary" id="btn-geocode" onclick="geocodeAddress()">
+                    <span class="btn-text">🔍 Parse & Geocode</span>
+                </button>
+                <button class="btn btn-secondary" id="btn-clear" onclick="clearAll()">
+                    <span class="btn-text">✕ Clear</span>
+                </button>
+            </div>
+
+            <div class="samples-bar" id="samples-bar">
+                <span style="color: var(--text-muted); font-size: 0.78rem; padding: 6px 0;">Try:</span>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section" id="results-section" style="display: none;">
+            <!-- Left Column: Entities + Tokens -->
+            <div>
+                <!-- Token Predictions -->
+                <div class="glass-card animate-in" id="tokens-card">
+                    <div class="glass-card__header">
+                        <span class="glass-card__icon">🏷️</span>
+                        <span class="glass-card__title">Token Classification</span>
+                    </div>
+                    <div class="token-flow" id="token-flow"></div>
+                    <div class="token-legend" id="token-legend"></div>
+                </div>
+
+                <!-- Extracted Entities -->
+                <div class="glass-card animate-in" id="entities-card" style="margin-top: 24px;">
+                    <div class="glass-card__header">
+                        <span class="glass-card__icon">📋</span>
+                        <span class="glass-card__title">Extracted Entities</span>
+                    </div>
+                    <div class="entity-grid" id="entity-grid"></div>
+
+                    <!-- Cleaned Query -->
+                    <div id="query-section" style="margin-top: 16px;">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px;">
+                            Cleaned Geocoding Query
+                        </div>
+                        <div class="query-display" id="query-display"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Map + Geocode Info -->
+            <div>
+                <!-- Map -->
+                <div class="glass-card animate-in" id="map-card">
+                    <div class="glass-card__header">
+                        <span class="glass-card__icon">🗺️</span>
+                        <span class="glass-card__title">Geocoded Location</span>
+                    </div>
+                    <div class="map-container" id="map-container">
+                        <div class="map-placeholder" id="map-placeholder">
+                            <span class="map-placeholder__icon">🌍</span>
+                            <span>Map will appear after geocoding</span>
+                        </div>
+                    </div>
+
+                    <!-- Review Alert -->
+                    <div id="review-alert" style="display: none;"></div>
+
+                    <!-- Geocode Details -->
+                    <div class="geocode-info" id="geocode-info"></div>
+
+                    <!-- Confidence Meter -->
+                    <div class="confidence-meter" id="confidence-meter" style="display: none;">
+                        <div class="confidence-meter__label">
+                            <span>Geocoding Confidence</span>
+                            <span id="confidence-value">0%</span>
+                        </div>
+                        <div class="confidence-meter__bar">
+                            <div class="confidence-meter__fill" id="confidence-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
