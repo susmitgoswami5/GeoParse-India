@@ -19,10 +19,6 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 
-[project.urls]
-Homepage = "https://github.com/susmitgoswami5/GeoParse-India"
-"Bug Tracker" = "https://github.com/susmitgoswami5/GeoParse-India/issues"
-
 dependencies = [
     "transformers>=4.30.0",
     "torch>=2.0.0",
@@ -36,6 +32,10 @@ dependencies = [
     "seqeval>=1.2.2",
     "metaphone>=0.6",
 ]
+
+[project.urls]
+Homepage = "https://github.com/susmitgoswami5/GeoParse-India"
+"Bug Tracker" = "https://github.com/susmitgoswami5/GeoParse-India/issues"
 
 [project.optional-dependencies]
 dev = [

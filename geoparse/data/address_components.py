@@ -239,3 +239,29 @@ def get_noisy_variant(word: str) -> str:
     if word in TRANSLITERATIONS:
         return random.choice(TRANSLITERATIONS[word])
     return word
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Real Indian cities that are OUTSIDE the geocoding coverage above.
+# The phonetic corrector must recognise these as valid names and leave them
+# unchanged, instead of "correcting" them to a similar-looking covered city
+# (e.g. Raipur -> Jaipur, Kanpur -> Nagpur). Addresses in these cities are
+# then flagged for manual review by the geocoder rather than mis-located.
+# ──────────────────────────────────────────────────────────────────────────────
+OTHER_INDIAN_CITIES: List[str] = [
+    "Agartala", "Agra", "Aizawl", "Ajmer", "Aligarh", "Allahabad", "Prayagraj", "Ambala",
+    "Amravati", "Amritsar", "Asansol", "Aurangabad", "Bardhaman", "Bareilly", "Belagavi",
+    "Bhagalpur", "Bhilai", "Bhiwandi", "Bhubaneswar", "Bikaner", "Bilaspur", "Bokaro",
+    "Cuttack", "Darbhanga", "Dehradun", "Dhanbad", "Dibrugarh", "Durg", "Durgapur", "Erode",
+    "Faridabad", "Firozabad", "Gangtok", "Gaya", "Ghaziabad", "Gorakhpur", "Gulbarga",
+    "Kalaburagi", "Guntur", "Gwalior", "Haldia", "Hisar", "Howrah", "Hubli", "Imphal",
+    "Itanagar", "Jabalpur", "Jalandhar", "Jalgaon", "Jammu", "Jamnagar", "Jamshedpur",
+    "Jhansi", "Jodhpur", "Jorhat", "Kakinada", "Kannur", "Kanpur", "Karnal", "Kharagpur",
+    "Kohima", "Kolhapur", "Kota", "Kozhikode", "Kurnool", "Ludhiana", "Madurai", "Malappuram",
+    "Malda", "Mangaluru", "Mangalore", "Mathura", "Meerut", "Moradabad", "Muzaffarpur",
+    "Mysuru", "Mysore", "Nashik", "Nellore", "Panaji", "Panipat", "Patiala", "Puducherry",
+    "Raipur", "Rajahmundry", "Rajkot", "Ranchi", "Rohtak", "Rourkela", "Saharanpur", "Salem",
+    "Sangli", "Shillong", "Shimla", "Siliguri", "Silchar", "Solapur", "Srinagar", "Tezpur",
+    "Thrissur", "Tiruchirappalli", "Tirunelveli", "Tirupati", "Udaipur", "Ujjain", "Varanasi",
+    "Vasai", "Vellore", "Vijayawada", "Warangal",
+]

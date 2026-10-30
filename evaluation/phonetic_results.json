@@ -1,0 +1,40 @@
+{
+ "n_misspellings": 285,
+ "original": {
+  "A_misspelling_correction_accuracy": 0.996,
+  "A_accuracy_by_noise_type": {
+   "adjacent_swap": 1.0,
+   "char_deletion": 1.0,
+   "phonetic_respelling": 1.0,
+   "random_substitution": 1.0,
+   "vowel_drop": 0.95
+  },
+  "B_false_corrections_known_other_cities": "12/110",
+  "C_false_corrections_unseen_cities": "6/60",
+  "C_examples": [
+   "Satna -> Patna",
+   "Raigarh -> Chandigarh",
+   "Purnia -> Pune",
+   "Hapur -> Jaipur",
+   "Kollam -> Kolkata",
+   "Ahmednagar -> Ahmedabad"
+  ]
+ },
+ "guarded": {
+  "A_misspelling_correction_accuracy": 0.996,
+  "A_accuracy_by_noise_type": {
+   "adjacent_swap": 1.0,
+   "char_deletion": 1.0,
+   "phonetic_respelling": 1.0,
+   "random_substitution": 1.0,
+   "vowel_drop": 0.95
+  },
+  "B_false_corrections_known_other_cities": "0/110",
+  "C_false_corrections_unseen_cities": "3/60",
+  "C_examples": [
+   "Purnia -> Pune",
+   "Kollam -> Kolkata",
+   "Ahmednagar -> Ahmedabad"
+  ]
+ }
+}

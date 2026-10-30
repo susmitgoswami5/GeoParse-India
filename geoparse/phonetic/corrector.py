@@ -20,7 +20,9 @@ try:
 except ImportError:
     HAS_JELLYFISH = False
 
-from geoparse.data.address_components import CITIES, LOCALITIES, DEFAULT_LOCALITIES, TRANSLITERATIONS
+from geoparse.data.address_components import (
+    CITIES, LOCALITIES, DEFAULT_LOCALITIES, TRANSLITERATIONS, OTHER_INDIAN_CITIES,
+)
 
 
 class PhoneticCorrector:
@@ -31,12 +33,23 @@ class PhoneticCorrector:
     Double Metaphone encoding + Jaro-Winkler similarity for fuzzy matching.
     """
 
-    def __init__(self, similarity_threshold: float = 0.80):
+    # Fuzzy matches whose first letter differs from the input are accepted only
+    # above this (much stricter) similarity. Real misspellings and SMS-style
+    # abbreviations almost always keep the first letter ("Bnglr", "Hydrabad"),
+    # whereas different cities often differ only there (Raipur / Jaipur).
+    FIRST_LETTER_OVERRIDE_SIMILARITY = 0.95
+
+    def __init__(self, similarity_threshold: float = 0.80, guard_false_corrections: bool = True):
         """
         Args:
             similarity_threshold: Minimum Jaro-Winkler similarity for a match (0.0-1.0).
+            guard_false_corrections: If True (default), never rewrite a known Indian city
+                outside the coverage list, and require fuzzy matches to share the first
+                letter. Set False to reproduce the original, unguarded behaviour.
         """
         self.similarity_threshold = similarity_threshold
+        self.guard_false_corrections = guard_false_corrections
+        self.other_cities = {c.lower() for c in OTHER_INDIAN_CITIES}
 
         # Build canonical dictionaries
         self.canonical_cities: Dict[str, Dict] = {}
@@ -101,6 +114,10 @@ class PhoneticCorrector:
             canonical = self.city_variants[text_lower]
             return canonical, 0.95
 
+        # 2b. A real city outside our coverage: keep it as written (no correction)
+        if self.guard_false_corrections and text_lower in self.other_cities:
+            return text, 0.0
+
         # 3. Metaphone-based fuzzy match
         best_match = None
         best_score = 0.0
@@ -127,10 +144,17 @@ class PhoneticCorrector:
                     best_match = canonical_name
 
         if best_match and best_score >= self.similarity_threshold:
-            return self.canonical_cities[best_match]["name"], round(best_score, 4)
+            if self._passes_guard(text_lower, best_match, best_score):
+                return self.canonical_cities[best_match]["name"], round(best_score, 4)
 
         # No match found — return original
         return text, 0.0
+
+    def _passes_guard(self, query: str, candidate: str, score: float) -> bool:
+        """Reject fuzzy matches that change the first letter unless near-identical."""
+        if not self.guard_false_corrections or not query:
+            return True
+        return query[0] == candidate[0] or score >= self.FIRST_LETTER_OVERRIDE_SIMILARITY
 
     def correct_locality(self, text: str) -> Tuple[str, float]:
         """
