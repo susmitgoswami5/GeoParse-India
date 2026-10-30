@@ -49,3 +49,8 @@ coverage.xml
 # OS
 .DS_Store
 Thumbs.db
+
+# Generated data and trained models (re-create with the commands in README)
+data/
+models/
+*.log
